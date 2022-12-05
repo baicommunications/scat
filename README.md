@@ -7,7 +7,7 @@ This repository contians changes to allow for us to write from qmdl input file t
 
 To install the required dependices run **(you can skip the first two steps if you already have python and pip installed on your system)**: 
 
-``` curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ```
+``` curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ```<br>
 ``` git clone this repo ```<br>
 ``` cd this repo ```<br>
 ``` pip install -r requirements.txt```
