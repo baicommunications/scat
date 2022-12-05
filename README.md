@@ -1,3 +1,29 @@
+# Small Derivation of Original SCAT Library 
+
+Original Repository didn't contain the logic to write to wireshark format with an input dump file.
+This repository contians changes to allow for us to write from qmdl input file to pcap output file. 
+
+**to avoid dependency issues its best to create a venv for this** 
+
+To install the required dependices run **(you can skip the first two steps if you already have python and pip installed on your system)**: 
+
+``` curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ```
+``` git clone this repo ```<br>
+``` cd this repo ```<br>
+``` pip install -r requirements.txt```
+
+To run the program ↓
+
+
+```python ./scat.py -t qc -d log.qmdl -F log.pcap```
+
+or
+
+```python3 ./scat.py -t qc -d log.qmdl -F log.pcap```
+
+These Instructions were derived from this [blog post](https://blog.cacombos.com/2021/06/13/convert-qmdl-to-pcap/)<br><br>
+To learn more about the features and functionality of the full library the original documentaiton is below ↓
+***
 # SCAT: Signaling Collection and Analysis Tool
 
 This application parses diagnostic messages of Qualcomm and Samsung baseband

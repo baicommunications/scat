@@ -203,8 +203,12 @@ class QualcommParser:
     def run_diag(self, writer_qmdl = None):
         oldbuf = b''
         loop = True
+        # self.logger.log(logging.INFO, f'IO device is {self.io_device}')
+        # self.logger.log(logging.INFO, f'Writer is {writer_qmdl}')
+        #bufIterations = 0
         try:
             while loop:
+                #bufIterations += 1
                 buf = self.io_device.read(0x1000)
                 if len(buf) == 0:
                     if self.io_device.block_until_data:
@@ -225,7 +229,7 @@ class QualcommParser:
                     self.parse_diag(pkt)
                     if writer_qmdl:
                         writer_qmdl.write_cp(pkt + b'\x7e')
-
+            # self.logger.log(logging.INFO, f'buffer Iterations {bufIterations}')
         except KeyboardInterrupt:
             return
 
@@ -268,8 +272,10 @@ class QualcommParser:
         while self.io_device.file_available:
             self.logger.log(logging.INFO, "Reading from {}".format(self.io_device.fname))
             if self.io_device.fname.find('.qmdl') > 0:
+                # self.logger.log(logging.INFO, " File is .qmdl format")
                 self.run_diag()
             elif self.io_device.fname.find('.dlf') > 0:
+                # self.logger.log(logging.INFO, " File is .dlf format")
                 self.parse_dlf()
             else:
                 self.logger.log(logging.INFO, 'Unknown baseband dump type, assuming QMDL')

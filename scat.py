@@ -127,9 +127,11 @@ if __name__ == '__main__':
     if args.pcap_file == None:
         writer = writers.SocketWriter(GSMTAP_IP, GSMTAP_PORT, IP_OVER_UDP_PORT)
     else:
+        #print("Init PCAP WRITER")
         writer = writers.PcapWriter(args.pcap_file, GSMTAP_PORT, IP_OVER_UDP_PORT)
 
     current_parser = parser_dict[args.type]
+    #print(f'IO DEVICE: {io_device}')
     current_parser.set_io_device(io_device)
     current_parser.set_writer(writer)
 
@@ -154,7 +156,10 @@ if __name__ == '__main__':
         current_parser.set_parameter({'model': args.model})
 
     # Run process
+    # print(f'Args: {args}')
+    # print("Serial Args: ", args.serial, args.usb, args.dump)
     if args.serial or args.usb:
+        #print("In Serial/USB block")
         current_parser.stop_diag()
         current_parser.init_diag()
         current_parser.prepare_diag()
@@ -163,12 +168,16 @@ if __name__ == '__main__':
 
         if not (args.qmdl == None) and args.type == 'qc':
             current_parser.run_diag(writers.RawWriter(args.qmdl))
+            #print("Writing")
         else:
             current_parser.run_diag()
 
         current_parser.stop_diag()
+    elif args.dump and args.pcap_file:
+        current_parser.run_diag(writer)
     elif args.dump:
         current_parser.read_dump()
+        #current_parser.run_diag(writer)
     else:
         assert('Invalid input handler?')
         sys.exit(0)
